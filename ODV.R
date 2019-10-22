@@ -14,7 +14,7 @@ library(RPMG)
 ctd <- read.csv("Multiparametrica Calpe/Datos/Datos_def_cada_0.2metro_corrected_0001.csv", sep = ";", dec = ".")
 
 ctd <- mutate(ctd, Depth  = -Depth) #Correct for plotting
-
+ctd <- na.omit(ctd)
 
 ########################################################################### 
 ########################################################################### 
@@ -187,6 +187,7 @@ ggplot(data = ctd_mba, aes(x = Date, y = Depth)) +
 ################################ Salinidad ################################# 
 ########################################################################### 
 
+
 #En el tercer dato, a??ade despues del ctd$ la columna que quieras representar.
 ctd2 <- data.frame(ctd$Date, ctd$Depth, ctd$Sal*10)
 colnames(ctd2) <- c("Date", "Depth", "Data")
@@ -270,11 +271,6 @@ ggplot(data = ctd_mba, aes(x = Date, y = Depth)) +
 ############################### Datos Calpe ################################
 ################################# Oxigeno ################################## 
 ########################################################################### 
-
-
-ctd <- read.csv("Multiparametrica Calpe/Datos/Datos_def_cada_0.2metro_corrected_0000.csv", sep = ";", dec = ".")
-
-ctd <- mutate(ctd, Depth  = -Depth) #Correct for plotting
 
 
 #En el tercer dato, a??ade despues del ctd$ la columna que quieras representar.
@@ -370,12 +366,6 @@ ggplot(data = ctd_mba, aes(x = Date, y = Depth)) +
 ############################### Turbidez ################################ 
 ########################################################################### 
 
-
-    
-ctd <- read.csv("Multiparametrica Calpe/Datos/Datos_def_cada_0.2metro_corrected_0000.csv", sep = ";", dec = ".")
-    
-ctd <- mutate(ctd, Depth  = -Depth) #Correct for plotting
-    
     
 #En el tercer dato, a??ade despues del ctd$ la columna que quieras representar.
 ctd2 <- data.frame(ctd$Date, ctd$Depth, ctd$Turb*10)
@@ -454,14 +444,14 @@ ggplot(data = ctd_mba, aes(x = Date, y = Depth)) +
 ############################### Datos Calpe ################################
 ################################### ph #################################### 
 ########################################################################### 
-    
-    
-    
-ctd <- read.csv("Multiparametrica Calpe/Datos/Datos_def_cada_0.2metro_corrected_0000.csv", sep = ";", dec = ".")
 
-ctd <- mutate(ctd, Depth  = -Depth) #Correct for plotting
-    
-    
+for(i in 1:length(ctd$pH)){
+    if(ctd$pH[i] < 7) {
+        ctd$pH[i] <- NA
+    } else {}
+}
+
+
 #En el tercer dato, a??ade despues del ctd$ la columna que quieras representar.
 ctd2 <- data.frame(ctd$Date, ctd$Depth, ctd$pH*10)
 colnames(ctd2) <- c("Date", "Depth", "Data")
